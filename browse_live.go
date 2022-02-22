@@ -3,11 +3,11 @@ package radigo
 import (
 	"flag"
 	"fmt"
-	"os/exec"
 	"strings"
 
 	"github.com/mitchellh/cli"
 	"github.com/yyoshiki41/go-radiko"
+	"github.com/yyoshiki41/radigo/internal"
 )
 
 type browseLiveCommand struct {
@@ -30,8 +30,7 @@ func (c *browseLiveCommand) Run(args []string) int {
 	}
 
 	url := radiko.GetLiveURL(stationID)
-	cmd := exec.Command("open", url)
-	if err := cmd.Run(); err != nil {
+	if err := internal.OpenBrowser(url); err != nil {
 		c.ui.Error(fmt.Sprintf(
 			"Failed to open browser: %s", err))
 	}
